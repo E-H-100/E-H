@@ -14,7 +14,7 @@ window.addEventListener('load', function() {
 // Wait for the page to fully load
 window.addEventListener('load', function() {
   // Define your password (change "1234" to your preferred password)
-  var correctPassword = "1234";
+  var correctPassword = "05-11-09";
   var maxAttempts = 3;
   var attemptCount = 0;
   
