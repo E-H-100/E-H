@@ -14,7 +14,7 @@ window.addEventListener('load', function() {
 // Wait for the page to fully load
 window.addEventListener('load', function() {
   // Define your password (change "1234" to your preferred password)
-  var correctPassword = "05-11-09";
+  var correctPassword = "1234";
   var maxAttempts = 3;
   var attemptCount = 0;
   
@@ -35,10 +35,14 @@ window.addEventListener('load', function() {
   function attemptUnlock() {
     var enteredPassword = lockInput.value;
     if (enteredPassword === correctPassword) {
-      // Hide the lock screen if the password is correct
-      lockScreen.style.display = 'none';
-      // Re-enable scrolling
-      document.body.style.overflow = 'auto';
+      // Add the fade-out class for a smooth transition
+      lockScreen.classList.add('fade-out');
+      // After the transition ends (0.5s), remove the lock screen
+      setTimeout(function() {
+        lockScreen.style.display = 'none';
+        // Re-enable scrolling
+        document.body.style.overflow = 'auto';
+      }, 500);
     } else {
       attemptCount++;
       if (attemptCount >= maxAttempts) {
