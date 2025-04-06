@@ -16,41 +16,56 @@ window.addEventListener('load', function() {
   // Define your password (change "1234" to your preferred password)
   var correctPassword = "05-11-09";
   var maxAttempts = 3;
-  var attemptCount = 0;
+  // Retrieve any previous attempt count from localStorage (or start at 0)
+  var attemptCount = parseInt(localStorage.getItem('attemptCount')) || 0;
   
   // Get the necessary elements
   var unlockButton = document.getElementById('unlock-button');
   var lockScreen = document.getElementById('lock-screen');
   var lockMessage = document.getElementById('lock-message');
   var lockInput = document.getElementById('lock-password');
+
+  // Check if the user is already locked out
+  if (localStorage.getItem('lockedOut') === 'true') {
+    lockInput.disabled = true;
+    unlockButton.disabled = true;
+    lockMessage.textContent = "Too many incorrect attempts. You are locked out.";
+  }
   
-  // Disable further attempts after exceeding max attempts
+  // Disable further attempts and store lock state in localStorage
   function disableLock() {
     lockInput.disabled = true;
     unlockButton.disabled = true;
-    lockMessage.textContent = "Too many incorrect attempts. Please refresh the page to try again.";
+    lockMessage.textContent = "Too many incorrect attempts. You are locked out.";
+    localStorage.setItem('lockedOut', 'true');
   }
   
   // Function to attempt unlocking the site
   function attemptUnlock() {
+    // If already locked out, do nothing
+    if (localStorage.getItem('lockedOut') === 'true') {
+      return;
+    }
+    
     var enteredPassword = lockInput.value;
     if (enteredPassword === correctPassword) {
       // Add the fade-out class for a smooth transition
       lockScreen.classList.add('fade-out');
-      // After the transition ends (0.5s), remove the lock screen
+      // After the transition (0.5s), hide the lock screen and re-enable scrolling
       setTimeout(function() {
-        lockScreen.style.display = 'none';
-        // Re-enable scrolling
-        document.body.style.overflow = 'auto';
+         lockScreen.style.display = 'none';
+         document.body.style.overflow = 'auto';
       }, 500);
+      // Clear any stored attempt count or lock flag (optional)
+      localStorage.removeItem('attemptCount');
+      localStorage.removeItem('lockedOut');
     } else {
       attemptCount++;
+      localStorage.setItem('attemptCount', attemptCount);
       if (attemptCount >= maxAttempts) {
         disableLock();
       } else {
-        // Display an error message if the password is incorrect
         lockMessage.textContent = "Incorrect password. Please try again.";
-        // Clear the input field for another try
         lockInput.value = '';
       }
     }
