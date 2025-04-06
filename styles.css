@@ -79,3 +79,62 @@ section {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+/* Lock Screen Styles */
+#lock-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);  /* Semi-transparent overlay */
+  backdrop-filter: blur(15px);     /* High intensity blur */
+  -webkit-backdrop-filter: blur(15px); /* For Safari */
+  z-index: 10000;                  /* Ensure it stays on top */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lock-container {
+  background: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 300px;
+  width: 90%;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.lock-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.lock-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.lock-container button {
+  padding: 10px 20px;
+  border: none;
+  background: #8B5E3C;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.lock-container button:hover {
+  background: #7a4c33;
+}
+
+#lock-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 10px;
+}
